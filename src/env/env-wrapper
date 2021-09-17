@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+function is_root {
+    if [ ${EUID:-$(id -u)} -eq 0 ]; then
+        return 0
+    fi
+    return 1
+}
+
+is_root || echo "You might experience some issues with running this as a user. Consider using sudo."
+
+export VSCS_CONFIG="$(is_root && echo "${SNAP_DATA}" || echo "${SNAP_USER_DATA}")/config.yaml"
+export VSCS_UDD="$(is_root && echo "${SNAP_DATA}" || echo "${SNAP_USER_DATA}")/user-data"
+export VSCS_EXT="$(is_root && echo "${SNAP_DATA}" || echo "${SNAP_USER_DATA}")/extensions"
+export VSCS_USD="$(is_root && echo "${SNAP_DATA}" || echo ${SNAP_USER_DATA})"
+
+if [ ! -d "${VSCS_UDD}" ]; then
+    mkdir -p "${VSCS_UDD}"
+fi
+
+if [ ! -d "${VSCS_EXT}" ]; then
+    mkdir -p "${VSCS_EXT}"
+fi
+
+if [ "$(basename ${1})" == "code-server" ]; then
+    ARGS=(--config "${VSCS_CONFIG}")
+    ARGS+=(--user-data-dir "${VSCS_UDD}")
+    ARGS+=(--extensions-dir "${VSCS_EXT}")
+    ARGS+=("${VSCS_USD}")
+    set -- "$@" "${ARGS[@]}"
+fi
+
+exec $@

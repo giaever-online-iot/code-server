@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+mkdir -p ${SNAP_DATA}/user-data/logs
+mkdir ${SNAP_DATA}/extensions

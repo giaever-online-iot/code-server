@@ -1,0 +1,91 @@
+name: code-server
+base: core20
+adopt-info: code-server
+summary: Run VS Code on any machine anywhere and access it in the browser.
+description: |
+  - Code on any device with a consistent development environment
+  - Use cloud servers to speed up tests, compilations, downloads, and more
+  - Preserve battery life when you're on the go; all intensive tasks run on your server
+
+  **NOTE!** This is an early release of `code-server`. The whole package might change.
+  Use at your own risk.
+
+  **DISCLAIMER** The developer of this package is not affiliated or closely associated 
+  with Coder Tech. Inc., the developers behind `code-server`. However we try to keep it 
+  as close to original as possible, with the limitations a (strictly confined) snap will
+  give.
+
+  **Plugs**
+  - vscs-content: Connect other snap pacakges to this package, e.g
+
+    ```
+    sudo snap connect code-server:vscs-content home-assistant-snap:configurations
+    ```
+
+    Make configurations of Home Assistant available in `code-server`, but this is only
+    available for the deamon or root user, and not when executing `code-server` as a
+    normal user.
+licence: MIT
+grade: devel # must be 'stable' to release into candidate/stable channels
+confinement: strict # use 'strict' once you have the right plugs and slots
+
+apps:
+  daemon:
+    daemon: simple
+    command: lib/node_modules/code-server/node_modules/.bin/code-server
+    command-chain: 
+      - env/env-wrapper
+    plugs:
+      - network
+      - network-bind
+
+  code-server:
+    command: lib/node_modules/code-server/node_modules/.bin/code-server
+    command-chain: 
+      - env/env-wrapper
+    plugs:
+      - network
+      - network-bind
+
+plugs:
+  vscs-content:
+    interface: content
+    target: $SNAP_DATA/plugged
+
+parts:
+  code-server:
+    after: [nodejs]
+    plugin: nil
+    build-packages:
+      - build-essential
+      - pkg-config
+      - python3
+    override-build: |
+      yarn add code-server && mkdir -p $SNAPCRAFT_PART_INSTALL/lib/node_modules \
+        && cp --archive --link --no-dereference $SNAPCRAFT_PART_BUILD \
+          $SNAPCRAFT_PART_INSTALL/lib/node_modules/code-server \
+    override-prime: |
+      snapcraftctl set-version "$(yarn info code-server version | tail -n2 | head -n1)"
+      snapcraftctl prime
+  dependencies:
+    plugin: nil
+    stage-packages:
+      - git
+  env-wrapper:
+    plugin: dump
+    source: src/
+  nodejs:
+    plugin: dump
+    source:
+      - on amd64: https://nodejs.org/dist/v14.17.6/node-v14.17.6-linux-x64.tar.gz
+      - on arm64: https://nodejs.org/dist/v14.17.6/node-v14.17.6-linux-arm64.tar.gz
+      - on armhf: https://nodejs.org/dist/v14.17.6/node-v14.17.6-linux-armv7l.tar.gz
+    override-stage: |
+      npm install -g yarn
+      snapcraftctl stage
+    organize:
+      '*.md' : nodejs/
+      LICENSE : nodejs/
+    prime:
+      - -include
+      - -share
