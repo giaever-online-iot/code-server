@@ -25,7 +25,15 @@ description: |
     Make configurations of Home Assistant available in `code-server`, but this is only
     available for the deamon or root user, and not when executing `code-server` as a
     normal user.
-licence: MIT
+
+  **Documentation?**
+  https://coder.com/docs/code-server/v3.12.0
+
+  **Something doesn't work?**
+  https://github.com/home-assistant-snap/code-server/issues
+
+  Feel free to help out and PR :)
+license: MIT
 grade: devel # must be 'stable' to release into candidate/stable channels
 confinement: strict # use 'strict' once you have the right plugs and slots
 
