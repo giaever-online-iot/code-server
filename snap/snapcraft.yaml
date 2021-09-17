@@ -63,7 +63,7 @@ apps:
 plugs:
   vscs-content:
     interface: content
-    target: $SNAP_DATA/plugged
+    target: $SNAP_COMMON/plugged
 
 parts:
   code-server:
