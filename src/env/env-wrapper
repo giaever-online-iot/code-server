@@ -1,27 +1,8 @@
 #!/usr/bin/env bash
 
-function is_root {
-    if [ ${EUID:-$(id -u)} -eq 0 ]; then
-        return 0
-    fi
-    return 1
-}
+source "${SNAP}/env/vars"
 
 is_root || echo "You might experience some issues with running this as a user. Consider using sudo."
-
-export VSCS_CONFIG="$(is_root && echo "${SNAP_DATA}" || echo "${SNAP_USER_DATA}")/config.yaml"
-export VSCS_UDD="$(is_root && echo "${SNAP_DATA}" || echo "${SNAP_USER_DATA}")/user-data"
-export VSCS_EXT="$(is_root && echo "${SNAP_DATA}" || echo "${SNAP_USER_DATA}")/extensions"
-export VSCS_USD="$(is_root && echo "${SNAP_DATA}" || echo ${SNAP_USER_DATA})"
-export VSCS_SSH="${SNAP_USER_COMMON}/.ssh"
-
-if [ ! -d "${VSCS_UDD}" ]; then
-    mkdir -p "${VSCS_UDD}"
-fi
-
-if [ ! -d "${VSCS_EXT}" ]; then
-    mkdir -p "${VSCS_EXT}"
-fi
 
 if [ "$(basename ${1})" == "code-server" ]; then
     ARGS=(--config "${VSCS_CONFIG}")
@@ -32,8 +13,10 @@ if [ "$(basename ${1})" == "code-server" ]; then
 fi
 
 if [ ! -d "${VSCS_SSH}" ]; then
-    mkdir -mode=0700 "${VSCS_SSH}"
-    echo "alias ssh-keygen='ssh-keygen -f \"${VSCS_SSH}/id_rsa\"'" >> "${SNAP_USER_DATA}/.bashrc" 
+    mkdir --mode=0700 "${VSCS_SSH}"
+    touch "${VSCS_SSH}/config"
+    chmod 0644 "${VSCS_SSH}/config"
+    echo "alias ssh-keygen='${SSH_KEYGEN}'" >> "${SNAP_USER_DATA}/.bashrc" 
     git config --global core.sshCommand "ssh -i \"${VSCS_SSH}/id_rsa\" -F \"${VSCS_SSH}/config\" -o BatchMode=yes -o StrictHostKeyChecking=accept-new -o UserKnownHostsFile=\"${VSCS_SSH}/known_hosts\""
 fi
 
