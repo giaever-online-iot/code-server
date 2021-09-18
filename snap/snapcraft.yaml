@@ -23,7 +23,7 @@ description: |
     ```
 
     Make configurations of Home Assistant available in `code-server`, but this is only
-    available for the deamon or root user, and not when executing `code-server` as a
+    available for the daemon or root user, and not when executing `code-server` as a
     normal user.
 
   **Documentation?**
@@ -49,6 +49,7 @@ apps:
     command-chain: 
       - env/env-wrapper
     plugs:
+      - home
       - network
       - network-bind
 
@@ -57,6 +58,7 @@ apps:
     command-chain: 
       - env/env-wrapper
     plugs:
+      - home
       - network
       - network-bind
 
@@ -84,6 +86,7 @@ parts:
     plugin: nil
     stage-packages:
       - git
+      - openssh-client
   env-wrapper:
     plugin: dump
     source: src/
