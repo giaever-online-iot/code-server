@@ -31,4 +31,10 @@ if [ "$(basename ${1})" == "code-server" ]; then
     set -- "$@" "${ARGS[@]}"
 fi
 
+if [ ! -d "${VSCS_SSH}" ]; then
+    mkdir -mode=0700 "${VSCS_SSH}"
+    echo "alias ssh-keygen='ssh-keygen -f \"${VSCS_SSH}/id_rsa\"'" >> "${SNAP_USER_DATA}/.bashrc" 
+    git config --global core.sshCommand "ssh -i \"${VSCS_SSH}/id_rsa\" -F \"${VSCS_SSH}/config\" -o BatchMode=yes -o StrictHostKeyChecking=accept-new -o UserKnownHostsFile=\"${VSCS_SSH}/known_hosts\""
+fi
+
 exec $@
