@@ -19,7 +19,7 @@ description: |
   - vscs-content: Connect other snap pacakges to this package, e.g
 
     ```
-    sudo snap connect code-server:vscs-content home-assistant-snap:configurations
+    sudo snap connect code-server:vscs-content home-assistant-snap:vscs-content
     ```
 
     Make configurations of Home Assistant available in `code-server`, but this is only

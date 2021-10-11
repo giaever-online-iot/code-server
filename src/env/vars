@@ -10,7 +10,7 @@ function is_root {
 export VSCS_CONFIG="$(is_root && echo "${SNAP_DATA}" || echo "${SNAP_USER_DATA}")/config.yaml"
 export VSCS_UDD="$(is_root && echo "${SNAP_DATA}" || echo "${SNAP_USER_DATA}")/user-data"
 export VSCS_EXT="$(is_root && echo "${SNAP_DATA}" || echo "${SNAP_USER_DATA}")/extensions"
-export VSCS_USD="$(is_root && echo "${SNAP_DATA}" || echo ${SNAP_USER_DATA})"
+export VSCS_USD="$(is_root && echo "${SNAP_COMMON}" || echo ${SNAP_USER_DATA})"
 export VSCS_SSH="${SNAP_USER_COMMON}/.ssh"
 
 if [ ! -d "${VSCS_UDD}" ]; then
