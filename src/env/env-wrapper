@@ -9,6 +9,19 @@ if [ "$(basename ${1})" == "code-server" ]; then
     ARGS+=(--user-data-dir "${VSCS_UDD}")
     ARGS+=(--extensions-dir "${VSCS_EXT}")
     ARGS+=("${VSCS_USD}")
+
+    PORT=8080
+    nc -w5 -z localhost "${PORT}"
+    while [ $? -eq 0 && "${PORT}" -lt 8090 ]; do
+        let "PORT+=1"
+        nc -w5 -z localhost "${PORT}"
+    done
+
+    if [ ${PORT} != 8080 ]; then
+        echo "Port 8080 in use. Using ${PORT}."
+        ARGS+=(--bind-addr "0.0.0.0:${PORT}")
+    fi
+
     set -- "$@" "${ARGS[@]}"
 fi
 
