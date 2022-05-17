@@ -94,9 +94,9 @@ parts:
   nodejs:
     plugin: dump
     source:
-      - on amd64: https://nodejs.org/dist/v14.17.6/node-v14.17.6-linux-x64.tar.gz
-      - on arm64: https://nodejs.org/dist/v14.17.6/node-v14.17.6-linux-arm64.tar.gz
-      - on armhf: https://nodejs.org/dist/v14.17.6/node-v14.17.6-linux-armv7l.tar.gz
+      - on amd64: https://nodejs.org/dist/v16.15.0/node-v16.15.0-linux-x64.tar.gz
+      - on arm64: https://nodejs.org/dist/v16.15.0/node-v16.15.0-linux-arm64.tar.gz
+      - on armhf: https://nodejs.org/dist/v16.15.0/node-v16.15.0-linux-armv7l.tar.gz
     override-stage: |
       npm install -g yarn
       snapcraftctl stage
