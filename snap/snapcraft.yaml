@@ -86,6 +86,7 @@ parts:
     plugin: nil
     stage-packages:
       - git
+      - git-all # Add submodules etc?
       - openssh-client
   env-wrapper:
     plugin: dump
