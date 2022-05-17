@@ -76,6 +76,12 @@ parts:
       - pkg-config
       - python3
     override-build: |
+      if [ -n "${http_proxy-}" ]; then
+        yarn config set httpProxy "${http_proxy}"
+      fi
+      if [ -n "${https_proxy-}" ]; then
+        yarn config set httpsProxy "${https_proxy}"
+      fi
       yarn add code-server && mkdir -p $SNAPCRAFT_PART_INSTALL/lib/node_modules \
         && cp --archive --link --no-dereference $SNAPCRAFT_PART_BUILD \
           $SNAPCRAFT_PART_INSTALL/lib/node_modules/code-server \
