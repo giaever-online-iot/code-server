@@ -4,6 +4,8 @@ source "${SNAP}/env/vars"
 
 is_root || echo "You might experience some issues with running this as a user. Consider using sudo."
 
+export PATH="${PATH}:$(find $SNAP -wholename $SNAP/*lib/git-core -print0 -quit)"
+
 if [ "$(basename ${1})" == "code-server" ]; then
     ARGS=(--config "${VSCS_CONFIG}")
     ARGS+=(--user-data-dir "${VSCS_UDD}")
