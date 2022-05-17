@@ -67,6 +67,10 @@ plugs:
     interface: content
     target: $SNAP_COMMON/plugged
 
+layout:
+  /usr/lib/git-core:
+    symlink: $SNAP/usr/lib/git-core
+
 parts:
   code-server:
     after: [nodejs]
