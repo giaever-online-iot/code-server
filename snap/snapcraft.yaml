@@ -98,6 +98,7 @@ parts:
       - git
       - git-all # Add submodules etc?
       - openssh-client
+      - screen
   env-wrapper:
     plugin: dump
     source: src/
