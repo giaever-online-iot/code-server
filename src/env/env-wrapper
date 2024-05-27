@@ -14,7 +14,7 @@ if [ "$(basename ${1})" == "code-server" ]; then
 
     PORT=8080
     nc -w5 -z localhost "${PORT}"
-    while [ $? -eq 0 && "${PORT}" -lt 8090 ]; do
+    while [ $? -eq 0 ] && [ "${PORT}" -lt 8090 ]; do
         let "PORT+=1"
         nc -w5 -z localhost "${PORT}"
     done
