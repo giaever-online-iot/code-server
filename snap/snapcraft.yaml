@@ -1,5 +1,5 @@
 name: code-server
-base: core22
+base: core24
 adopt-info: code-server
 summary: Run VS Code on any machine anywhere and access it in the browser.
 description: |
@@ -37,10 +37,10 @@ license: MIT
 grade: stable # must be 'stable' to release into candidate/stable channels
 confinement: strict # use 'strict' once you have the right plugs and slots
 
-architectures:
-  - build-on: amd64
-  - build-on: arm64
-  - build-on: armhf
+platforms:
+  amd64:
+  arm64:
+  armhf:
 
 apps:
   daemon:
@@ -81,17 +81,23 @@ parts:
       - python3
     override-build: |
       if [ -n "${http_proxy-}" ]; then
-        yarn config set httpProxy "${http_proxy}"
+        npm config set proxy "${http_proxy}"
       fi
       if [ -n "${https_proxy-}" ]; then
-        yarn config set httpsProxy "${https_proxy}"
+        npm config set https-proxy "${https_proxy}"
       fi
-      yarn add code-server && mkdir -p $SNAPCRAFT_PART_INSTALL/lib/node_modules \
-        && cp --archive --link --no-dereference $SNAPCRAFT_PART_BUILD \
-          $SNAPCRAFT_PART_INSTALL/lib/node_modules/code-server \
-    override-prime: |
-      snapcraftctl set-version "$(yarn info code-server version | tail -n2 | head -n1)"
-      snapcraftctl prime
+      npm install --verbose --unsafe-perm code-server
+      mkdir -p $CRAFT_PART_INSTALL/lib/node_modules \
+        && cp --archive --link --no-dereference $CRAFT_PART_BUILD \
+          $CRAFT_PART_INSTALL/lib/node_modules/code-server \
+      craftctl set version="$(npm info code-server version)"
+
+    stage:
+      - -bin/corepack
+      - -bin/npx
+      - -lib/node_modules/corepack
+      - -lib/node_modules/npx
+
   dependencies:
     plugin: nil
     stage-packages:
@@ -99,21 +105,21 @@ parts:
       - git-all # Add submodules etc?
       - openssh-client
       - screen
+
   env-wrapper:
     plugin: dump
     source: src/
+
   nodejs:
     plugin: dump
     source:
-      - on amd64: https://nodejs.org/dist/v18.18.0/node-v18.18.0-linux-x64.tar.gz
-      - on arm64: https://nodejs.org/dist/v18.18.0/node-v18.18.0-linux-arm64.tar.gz
-      - on armhf: https://nodejs.org/dist/v18.18.0/node-v18.18.0-linux-armv7l.tar.gz
-    override-stage: |
-      npm install -g yarn
-      snapcraftctl stage
+      - on amd64: https://nodejs.org/dist/v18.20.3/node-v18.20.3-linux-x64.tar.gz
+      - on arm64: https://nodejs.org/dist/v18.20.3/node-v18.20.3-linux-arm64.tar.gz
+      - on armhf: https://nodejs.org/dist/v18.20.3/node-v18.20.3-linux-armv7l.tar.gz
     organize:
       '*.md' : nodejs/
       LICENSE : nodejs/
     prime:
       - -include
       - -share
+      - -lib/node_modules/corepack
