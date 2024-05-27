@@ -1,5 +1,5 @@
 name: code-server
-base: core20
+base: core22
 adopt-info: code-server
 summary: Run VS Code on any machine anywhere and access it in the browser.
 description: |
@@ -27,7 +27,7 @@ description: |
     normal user.
 
   **Documentation?**
-  https://coder.com/docs/code-server/v3.12.0
+  https://coder.com/docs/code-server/v4.89.1
 
   **Something doesn't work?**
   https://github.com/home-assistant-snap/code-server/issues
@@ -105,9 +105,9 @@ parts:
   nodejs:
     plugin: dump
     source:
-      - on amd64: https://nodejs.org/dist/v16.15.0/node-v16.15.0-linux-x64.tar.gz
-      - on arm64: https://nodejs.org/dist/v16.15.0/node-v16.15.0-linux-arm64.tar.gz
-      - on armhf: https://nodejs.org/dist/v16.15.0/node-v16.15.0-linux-armv7l.tar.gz
+      - on amd64: https://nodejs.org/dist/v18.18.0/node-v18.18.0-linux-x64.tar.gz
+      - on arm64: https://nodejs.org/dist/v18.18.0/node-v18.18.0-linux-arm64.tar.gz
+      - on armhf: https://nodejs.org/dist/v18.18.0/node-v18.18.0-linux-armv7l.tar.gz
     override-stage: |
       npm install -g yarn
       snapcraftctl stage
