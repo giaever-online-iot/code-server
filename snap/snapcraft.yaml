@@ -89,7 +89,7 @@ parts:
       npm install --verbose --unsafe-perm code-server
       mkdir -p $CRAFT_PART_INSTALL/lib/node_modules \
         && cp --archive --link --no-dereference $CRAFT_PART_BUILD \
-          $CRAFT_PART_INSTALL/lib/node_modules/code-server \
+          $CRAFT_PART_INSTALL/lib/node_modules/code-server
       craftctl set version="$(npm info code-server version)"
 
     stage:
