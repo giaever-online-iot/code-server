@@ -80,12 +80,6 @@ parts:
       - pkg-config
       - python3
     override-build: |
-      #if [ -n "${http_proxy-}" ]; then
-      #  npm config set proxy "${http_proxy}"
-      #fi
-      #if [ -n "${https_proxy-}" ]; then
-      #  npm config set https-proxy "${https_proxy}"
-      #fi
       npm install --verbose --unsafe-perm code-server
       mkdir -p $CRAFT_PART_INSTALL/lib/node_modules \
         && cp --archive --link --no-dereference $CRAFT_PART_BUILD \
