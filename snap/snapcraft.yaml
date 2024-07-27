@@ -107,9 +107,9 @@ parts:
   nodejs:
     plugin: dump
     source:
-      - on amd64: https://nodejs.org/dist/v18.20.3/node-v18.20.3-linux-x64.tar.gz
-      - on arm64: https://nodejs.org/dist/v18.20.3/node-v18.20.3-linux-arm64.tar.gz
-      - on armhf: https://nodejs.org/dist/v18.20.3/node-v18.20.3-linux-armv7l.tar.gz
+      - on amd64: https://nodejs.org/dist/v20.16.0/node-v20.16.0-linux-x64.tar.gz
+      - on arm64: https://nodejs.org/dist/v20.16.0/node-v20.16.0-linux-arm64.tar.gz
+      - on armhf: https://nodejs.org/dist/v20.16.0/node-v20.16.0-linux-armv7l.tar.gz
     organize:
       '*.md' : nodejs/
       LICENSE : nodejs/
