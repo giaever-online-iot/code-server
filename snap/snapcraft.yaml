@@ -79,6 +79,7 @@ parts:
       - build-essential
       - pkg-config
       - python3
+      - libkrb5-dev
     override-build: |
       npm install --verbose --unsafe-perm code-server
       mkdir -p $CRAFT_PART_INSTALL/lib/node_modules \
@@ -99,6 +100,7 @@ parts:
       - git-all # Add submodules etc?
       - openssh-client
       - screen
+      - libatomic1
 
   env-wrapper:
     plugin: dump
