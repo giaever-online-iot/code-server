@@ -52,6 +52,7 @@ apps:
       - home
       - network
       - network-bind
+      - removable-media
 
   code-server:
     command: lib/node_modules/code-server/node_modules/.bin/code-server
