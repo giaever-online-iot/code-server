@@ -72,6 +72,8 @@ plugs:
 layout:
   /usr/lib/git-core:
     symlink: $SNAP/usr/lib/git-core
+  /etc/shells:
+    bind-file: $SNAP/shells
 
 parts:
   code-server:
