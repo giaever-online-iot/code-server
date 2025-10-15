@@ -113,9 +113,9 @@ parts:
   nodejs:
     plugin: dump
     source:
-      - on amd64: https://nodejs.org/dist/v20.16.0/node-v20.16.0-linux-x64.tar.gz
-      - on arm64: https://nodejs.org/dist/v20.16.0/node-v20.16.0-linux-arm64.tar.gz
-      - on armhf: https://nodejs.org/dist/v20.16.0/node-v20.16.0-linux-armv7l.tar.gz
+      - on amd64: https://nodejs.org/dist/v20.16.0/node-v22.20.0-linux-x64.tar.gz
+      - on arm64: https://nodejs.org/dist/v20.16.0/node-v22.20.0-linux-arm64.tar.gz
+      - on armhf: https://nodejs.org/dist/v20.16.0/node-v22.20.0-linux-armv7l.tar.gz
     organize:
       '*.md' : nodejs/
       LICENSE : nodejs/
